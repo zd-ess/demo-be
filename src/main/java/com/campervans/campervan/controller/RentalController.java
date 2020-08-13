@@ -20,49 +20,49 @@ import java.util.List;
 public class RentalController {
     private static Logger logger = LoggerFactory.getLogger(RentalController.class);
     @Autowired
-    private RentalServiceImplement rentalService;
+    private RentalServiceImplement rentalServiceImplement;
 
     @GetMapping("/all")
     @Trace
     public List<Rental> getAllRental() {
-        return rentalService.getAllCampervan();
+        return rentalServiceImplement.getAllCampervan();
     }
 
     @GetMapping("/all_price")
     @Trace
     public List<Rental> getAllPriceDecs() {
-        return rentalService.getAllCampervanOrderByPricePerDayDESC();
+        return rentalServiceImplement.getAllCampervanOrderByPricePerDayDESC();
     }
 
     @GetMapping("/price_between")
     @Trace
     public List<Rental> getPriceBetween(@RequestParam double min, double max) {
-        return rentalService.getPricePerDayBetween(BigDecimal.valueOf(min), BigDecimal.valueOf(max));
+        return rentalServiceImplement.getPricePerDayBetween(BigDecimal.valueOf(min), BigDecimal.valueOf(max));
     }
 
     @GetMapping("/get_id")
     @Trace
     public List<Rental> getRentalsId(@RequestParam long id) {
 
-        return rentalService.getByCampervanID(id);
+        return rentalServiceImplement.getByCampervanID(id);
     }
 
     @GetMapping("/get_near")
     @Trace
     public List<Rental> getLocated(@RequestParam double x, double y) {
-        return rentalService.getLocation(x, y);
+        return rentalServiceImplement.getLocation(x, y);
     }
 
     @GetMapping("/page")
     @Trace
     public List<Rental> getPage(@RequestParam int limit, int offset) {
-        return rentalService.getPage(limit, offset);
+        return rentalServiceImplement.getPage(limit, offset);
     }
 
     @GetMapping("/ids")
     @Trace
     public List<Rental> getIds(@RequestParam long[] ids) {
-        return rentalService.getByCampervansIds(ids);
+        return rentalServiceImplement.getByCampervansIds(ids);
     }
 
 }
