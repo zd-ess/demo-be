@@ -2,7 +2,7 @@ package com.campervans.campervan.controller;
 
 
 import com.campervans.campervan.model.Rental;
-import com.campervans.campervan.service.impl.RentalServiceImpl;
+import com.campervans.campervan.service.RentalServiceImplement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import datadog.trace.api.Trace;
@@ -20,7 +20,7 @@ import java.util.List;
 public class RentalController {
     private static Logger logger = LoggerFactory.getLogger(RentalController.class);
     @Autowired
-    private RentalServiceImpl rentalService;
+    private RentalServiceImplement rentalService;
 
     @GetMapping("/all")
     @Trace
