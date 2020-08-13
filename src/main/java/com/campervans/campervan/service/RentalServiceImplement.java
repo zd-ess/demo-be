@@ -1,7 +1,6 @@
-package com.campervans.campervan.service.impl;
+package com.campervans.campervan.service;
 
 import com.campervans.campervan.repository.RentalRepository;
-import com.campervans.campervan.service.IRentalService;
 import io.sentry.Sentry;
 import io.sentry.event.BreadcrumbBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RentalServiceImpl implements IRentalService
-{
+public class RentalServiceImplement implements IRentalService{
 
 
     @Autowired
@@ -141,5 +139,4 @@ public class RentalServiceImpl implements IRentalService
                 .recordBreadcrumb(new BreadcrumbBuilder().setMessage("Exit from ByCampervansID").build());
         return rentalList;
     }
-
 }
