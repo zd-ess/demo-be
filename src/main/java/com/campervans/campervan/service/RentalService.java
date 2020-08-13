@@ -9,7 +9,7 @@ import java.util.List;
 public interface RentalService {
     List getAllCampervan();
 
-    List getPricePerDayBetween(BigDecimal min, BigDecimal max);
+    List getPricePerDayBetween(BigDecimal min,    BigDecimal max);
 
     List getByCampervansIds(long ids []);
 
