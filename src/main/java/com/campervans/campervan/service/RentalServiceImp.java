@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RentalServiceImplement implements IRentalService{
+public class RentalServiceImp implements IRentalService{
 
 
     @Autowired
