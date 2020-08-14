@@ -24,7 +24,7 @@ public class RentalServiceImp implements IRentalService{
     @Autowired
     private RentalRepository repository;
 
-    public List<RentalEntity> getAllEmployees(Integer pageNo, Integer pageSize, String sortBy)
+    public List<RentalEntity> getAllCampervans(Integer pageNo, Integer pageSize, String sortBy)
     {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
@@ -36,17 +36,17 @@ public class RentalServiceImp implements IRentalService{
             return new ArrayList<RentalEntity>();
         }
     }
-
-    public RentalEntity getEmployeeById(Long id) throws RecordNotFoundException
-    {
-        Optional<RentalEntity> employee = repository.findById(id);
-
-        if(employee.isPresent()) {
-            return employee.get();
-        } else {
-            throw new RecordNotFoundException("No employee record exist for given id");
-        }
-    }
+//
+//    public RentalEntity getCapmervansById(Long id) throws RecordNotFoundException
+//    {
+//        Optional<RentalEntity> employee = repository.findById(id);
+//
+//        if(employee.isPresent()) {
+//            return employee.get();
+//        } else {
+//            throw new RecordNotFoundException("No employee record exist for given id");
+//        }
+//    }
 
 
     /////////////////////
