@@ -1,9 +1,8 @@
 package com.campervans.campervan.repository;
 
-import com.campervans.campervan.model.Rental;
+import com.campervans.campervan.model.RentalEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -14,18 +13,18 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
-public interface RentalRepository extends  PagingAndSortingRepository<Rental, Long> {
+public interface RentalRepository extends  PagingAndSortingRepository<RentalEntity, Long> {
 
     @RestResource(rel = "rental", path="rental")
-    @Query("SELECT r FROM Rental r WHERE r.name = :name")
-    Page<Rental> findAll(@Param("name") String query, Pageable page);
+    @Query("SELECT r FROM RentalEntity r WHERE r.name = :name")
+    Page<RentalEntity> findAll(@Param("name") String query, Pageable page);
 
-    List<Rental> findByPricePerDayBetween(BigDecimal min, BigDecimal max);
+    List<RentalEntity> findByPricePerDayBetween(BigDecimal min, BigDecimal max);
 
-    @Query("select r from Rental as r where sqrt((r.lat-:x)*(r.lat-:x)+(r.lng-:y)*(r.lng-:y))<=100")
-    List<Rental> findLocated(double x, double y);
+    @Query("select r from RentalEntity as r where sqrt((r.lat-:x)*(r.lat-:x)+(r.lng-:y)*(r.lng-:y))<=100")
+    List<RentalEntity> findLocated(double x, double y);
 
-    List<Rental> findAllByOrderByPricePerDayDesc();
+    List<RentalEntity> findAllByOrderByPricePerDayDesc();
 
-    List<Rental> findAllById(long id);
+    List<RentalEntity> findAllById(long id);
 }

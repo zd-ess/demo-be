@@ -1,28 +1,63 @@
 package com.campervans.campervan.service;
 
+import com.campervans.campervan.exception.RecordNotFoundException;
+import com.campervans.campervan.model.RentalEntity;
 import com.campervans.campervan.repository.RentalRepository;
 import io.sentry.Sentry;
 import io.sentry.event.BreadcrumbBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RentalServiceImp implements IRentalService{
 
 
     @Autowired
-    private RentalRepository rentalRepository;
+    private RentalRepository repository;
+
+    public List<RentalEntity> getAllEmployees(Integer pageNo, Integer pageSize, String sortBy)
+    {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+        Page<RentalEntity> pagedResult = repository.findAll(paging);
+
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<RentalEntity>();
+        }
+    }
+
+    public RentalEntity getEmployeeById(Long id) throws RecordNotFoundException
+    {
+        Optional<RentalEntity> employee = repository.findById(id);
+
+        if(employee.isPresent()) {
+            return employee.get();
+        } else {
+            throw new RecordNotFoundException("No employee record exist for given id");
+        }
+    }
+
+
+    /////////////////////
+
 
     @Override
     public List getAllCampervan() {
         String message = String.format("Service - getAllCampervan");
         Sentry.getContext().recordBreadcrumb(new BreadcrumbBuilder().setMessage(message).build());
         List rentalList = new ArrayList();
-        rentalRepository.findAll().forEach(rentalList::add);
+        repository.findAll().forEach(rentalList::add);
         Sentry.getContext()
                 .recordBreadcrumb(new BreadcrumbBuilder().setMessage("Exit from getAllCampervan").build());
         return rentalList;
@@ -33,7 +68,7 @@ public class RentalServiceImp implements IRentalService{
         String message = String.format("Service - getBetweenPrice parameters" + min + max);
         Sentry.getContext().recordBreadcrumb(new BreadcrumbBuilder().setMessage(message).build());
         List rentalList = new ArrayList();
-        rentalRepository.findByPricePerDayBetween(min, max).forEach(rentalList::add);
+        repository.findByPricePerDayBetween(min, max).forEach(rentalList::add);
         Sentry.getContext()
                 .recordBreadcrumb(new BreadcrumbBuilder().setMessage("Exit from getBetweenPrice").build());
         return rentalList;
@@ -55,7 +90,7 @@ public class RentalServiceImp implements IRentalService{
                 Sentry.capture(e);
                 throw e;
             }
-            rentalList.add(rentalRepository.findAllById(id));
+            rentalList.add(repository.findAllById(id));
         }
         Sentry.getContext()
                 .recordBreadcrumb(new BreadcrumbBuilder().setMessage("Exit from ByCampervansIds").build());
@@ -78,7 +113,7 @@ public class RentalServiceImp implements IRentalService{
         }
         Sentry.getContext().clear();
         List rentalList = new ArrayList();
-        rentalRepository.findLocated(x, y).forEach(rentalList::add);
+        repository.findLocated(x, y).forEach(rentalList::add);
         return rentalList;
     }
 
@@ -87,7 +122,7 @@ public class RentalServiceImp implements IRentalService{
         String message = String.format("Service - getAllCampervanOrderByPricePerDayDESC");
         Sentry.getContext().recordBreadcrumb(new BreadcrumbBuilder().setMessage(message).build());
         List rentalList = new ArrayList();
-        rentalRepository.findAllByOrderByPricePerDayDesc().forEach(rentalList::add);
+        repository.findAllByOrderByPricePerDayDesc().forEach(rentalList::add);
         Sentry.getContext()
                 .recordBreadcrumb(
                         new BreadcrumbBuilder()
@@ -102,7 +137,7 @@ public class RentalServiceImp implements IRentalService{
         Sentry.getContext().recordBreadcrumb(new BreadcrumbBuilder().setMessage(message).build());
         List rentalList = new ArrayList();
         List page = new ArrayList();
-        rentalRepository.findAll().forEach(rentalList::add);
+        repository.findAll().forEach(rentalList::add);
         if (offset < 0 || offset > rentalList.size()) {
             IllegalArgumentException e = new IllegalArgumentException("Offset out of range");
             Sentry.capture(e);
@@ -134,7 +169,7 @@ public class RentalServiceImp implements IRentalService{
             throw e;
         }
         List rentalList = new ArrayList();
-        rentalRepository.findAllById(id).forEach(rentalList::add);
+        repository.findAllById(id).forEach(rentalList::add);
         Sentry.getContext()
                 .recordBreadcrumb(new BreadcrumbBuilder().setMessage("Exit from ByCampervansID").build());
         return rentalList;

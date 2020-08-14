@@ -15,7 +15,7 @@ public class Image extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = "rental_id", referencedColumnName = "id")
-    private Rental rental;
+    private RentalEntity rentalEntity;
 
     @Column(name = "url", nullable = false)
     private String url;

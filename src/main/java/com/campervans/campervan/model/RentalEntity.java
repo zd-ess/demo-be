@@ -1,5 +1,6 @@
 package com.campervans.campervan.model;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,15 +14,16 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "rentals")
-//@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Rental extends  AbstractEntity{
+public class RentalEntity extends  AbstractEntity{
 
-    public Rental(){}
+    public RentalEntity(){}
 
-    @Column(name = "name", nullable = false)
+//    @Column(name = "name", nullable = false)
+    @NotNull
+    @Column(columnDefinition = "VARCHAR", length = 100)
     private String name;
 
     @Column(name = "type", nullable = false)
