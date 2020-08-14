@@ -1,5 +1,6 @@
 package com.campervans.campervan.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,10 +13,14 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "rentals")
-@NoArgsConstructor
+//@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Rental extends  AbstractEntity{
+
+    public Rental(){}
+
     @Column(name = "name", nullable = false)
     private String name;
 
