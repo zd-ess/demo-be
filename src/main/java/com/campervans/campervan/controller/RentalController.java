@@ -1,6 +1,7 @@
 package com.campervans.campervan.controller;
 
 
+import com.campervans.campervan.exception.RecordNotFoundException;
 import com.campervans.campervan.model.RentalEntity;
 import com.campervans.campervan.repository.RentalRepository;
 import com.campervans.campervan.service.RentalServiceImp;
@@ -12,10 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -51,41 +49,50 @@ public class RentalController {
         return new ResponseEntity<List<RentalEntity>>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
+    @GetMapping("/van_paged")
+    public ResponseEntity<List<RentalEntity>> getPagedCapmpervans(
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize)
+//            @RequestParam(defaultValue = "id") String sortBy)
+    {
+        List<RentalEntity> list = service.getPagedCampervans(pageNo, pageSize);//, sortBy);
+
+        return new ResponseEntity<List<RentalEntity>>(list, new HttpHeaders(), HttpStatus.OK);
+    }
+
     @GetMapping("/campervans")
     public ResponseEntity<List<RentalEntity>> geSortedCapmpervans(
-//            @RequestParam(defaultValue = "0") Integer pageNo,
-//            @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy)
     {
-//        List<RentalEntity> list = service.getSortedCampervans( sortBy);
         List<RentalEntity> list = service.getSortBy( sortBy);
 
         return new ResponseEntity<List<RentalEntity>>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
-
-
-//
     @GetMapping(value = "/list")
     List<RentalEntity> all() {
         return (List<RentalEntity>) rentalRepository.findAll();
     }
 
 
-//    http://localhost:8089/campervans?pageSize=5
-//    http://localhost:8089/campervans?pageSize=5&pageNo=1
-//    http://localhost:8089/campervans?pageSize=5&pageNo=2
-//    http://localhost:8089/campervans?pageSize=5&pageNo=1&sortBy=email
-//    http://localhost:8089/campervans?pageSize=5&pageNo=1&sortBy=firstName
+    @GetMapping("/{id}")
+    public ResponseEntity<RentalEntity> getCampervanByIds(@PathVariable("id") Long id)
+            throws RecordNotFoundException {
+        RentalEntity entity = service.getCampervanById(id);
+
+        return new ResponseEntity<RentalEntity>(entity, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    //////
 
 
     //TODO
 //    - `campervans`
-//    - `campervans?price[min]=9000&price[max]=75000`
-//    - `campervans?page[limit]=3&page[offset]=6`
+//    - `campervans?price[min]=9000&price[max]=75000`    ok
+//    - `campervans?page[limit]=3&page[offset]=6`        ok
 //    - `campervans?ids=2000,51155,54318`
 //    - `campervans?near=33.64,-117.93` // within 100 miles
-//    - `campervans?sort=price`
+//    - `campervans?sort=price`                          ok
 //    - `campervans/<CAMPER_VAN_ID>`
 
 //    @GetMapping("/all")

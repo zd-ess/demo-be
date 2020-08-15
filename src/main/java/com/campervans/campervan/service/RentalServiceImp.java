@@ -37,39 +37,38 @@ public class RentalServiceImp implements IRentalService{
         }
     }
 
-//    public List<RentalEntity> getSortedCampervans(Integer pageNo, Integer pageSize, String sortBy)
-//    {
-//        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-//
-//        Page<RentalEntity> pagedResult = repository.findAll(paging);
-//
-//        if(pagedResult.hasContent()) {
-//            return pagedResult.getContent();
-//        } else {
-//            return new ArrayList<RentalEntity>();
-//        }
-//    }
+    public List<RentalEntity> getPagedCampervans(Integer pageNo, Integer pageSize)
+    {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
 
+        Page<RentalEntity> pagedResult = repository.findAll(paging);
+
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<RentalEntity>();
+        }
+    }
 
     public List<RentalEntity> getSortBy( String sortBy) {
-        Sort sortOrder = Sort.by("pricePerDay");
+        Sort sortOrder = Sort.by("vehicleYear");
 
         List<RentalEntity> list = (List<RentalEntity>) repository.findAll(sortOrder);
 
         return list;
     }
 
-//
-//    public RentalEntity getCapmervansById(Long id) throws RecordNotFoundException
-//    {
-//        Optional<RentalEntity> employee = repository.findById(id);
-//
-//        if(employee.isPresent()) {
-//            return employee.get();
-//        } else {
-//            throw new RecordNotFoundException("No employee record exist for given id");
-//        }
-//    }
+    public RentalEntity getCampervanById(Long id) throws RecordNotFoundException
+    {
+        Optional<RentalEntity> rental = repository.findById(id);
+
+        if(rental.isPresent()) {
+            return rental.get();
+        } else {
+            throw new RecordNotFoundException("No rental record exist for given id");
+        }
+    }
+
 
 
     /////////////////////
