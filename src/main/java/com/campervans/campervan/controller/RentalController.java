@@ -41,12 +41,24 @@ public class RentalController {
     }
 
     @GetMapping("/van")
-    public ResponseEntity<List<RentalEntity>> getAllCapmpervans(
+    public ResponseEntity<List<RentalEntity>> getPagedAndSortedCapmpervans(
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy)
     {
-        List<RentalEntity> list = service.getAllCampervans(pageNo, pageSize, sortBy);
+        List<RentalEntity> list = service.getPagedAndSortedCampervans(pageNo, pageSize, sortBy);
+
+        return new ResponseEntity<List<RentalEntity>>(list, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping("/campervans")
+    public ResponseEntity<List<RentalEntity>> geSortedCapmpervans(
+//            @RequestParam(defaultValue = "0") Integer pageNo,
+//            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(defaultValue = "id") String sortBy)
+    {
+//        List<RentalEntity> list = service.getSortedCampervans( sortBy);
+        List<RentalEntity> list = service.getSortBy( sortBy);
 
         return new ResponseEntity<List<RentalEntity>>(list, new HttpHeaders(), HttpStatus.OK);
     }
