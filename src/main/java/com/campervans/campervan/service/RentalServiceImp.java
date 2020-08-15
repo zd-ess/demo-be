@@ -24,7 +24,7 @@ public class RentalServiceImp implements IRentalService{
     @Autowired
     private RentalRepository repository;
 
-    public List<RentalEntity> getAllCampervans(Integer pageNo, Integer pageSize, String sortBy)
+    public List<RentalEntity> getPagedAndSortedCampervans(Integer pageNo, Integer pageSize, String sortBy)
     {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
@@ -36,6 +36,29 @@ public class RentalServiceImp implements IRentalService{
             return new ArrayList<RentalEntity>();
         }
     }
+
+//    public List<RentalEntity> getSortedCampervans(Integer pageNo, Integer pageSize, String sortBy)
+//    {
+//        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+//
+//        Page<RentalEntity> pagedResult = repository.findAll(paging);
+//
+//        if(pagedResult.hasContent()) {
+//            return pagedResult.getContent();
+//        } else {
+//            return new ArrayList<RentalEntity>();
+//        }
+//    }
+
+
+    public List<RentalEntity> getSortBy( String sortBy) {
+        Sort sortOrder = Sort.by("pricePerDay");
+
+        List<RentalEntity> list = (List<RentalEntity>) repository.findAll(sortOrder);
+
+        return list;
+    }
+
 //
 //    public RentalEntity getCapmervansById(Long id) throws RecordNotFoundException
 //    {
