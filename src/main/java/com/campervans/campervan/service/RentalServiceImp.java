@@ -69,17 +69,43 @@ public class RentalServiceImp implements IRentalService{
         }
     }
 
+    public List getCampervanByIds(long[] ids) throws RecordNotFoundException
+    {
+        if(ids.length == 0){
+            throw new RecordNotFoundException("No rental record exist for given id");
+        }
+
+                List list = new ArrayList();
+        for(long id : ids){
+            if(id < 1){
+                throw new RecordNotFoundException("Invalid id");
+            }
+            list.add(repository.findAllById(id));
+        }
+        return  list;
+
+//        Optional<RentalEntity> rental = repository.findAll().forEach(rentalList::add);
+//
+//        if(rental.isPresent()) {
+//            return rental.get();
+//        } else {
+//            throw new RecordNotFoundException("No rental record exist for given id");
+//        }
+    }
+
+
     @Override
     public List getPriceMinMax(BigDecimal min, BigDecimal max) {
-        List list = new ArrayList();
-        repository.findByPricePerDayBetween(min, max).forEach(list::add);
-        return list;
+
+        List rentalList = new ArrayList();
+        repository.findByPricePerDayBetween(min, max).forEach(rentalList::add);
+
+        return rentalList;
     }
 
 
 
-
-    /////////////////////
+    ///////////////////
 
 
     @Override
@@ -90,17 +116,6 @@ public class RentalServiceImp implements IRentalService{
         repository.findAll().forEach(rentalList::add);
         Sentry.getContext()
                 .recordBreadcrumb(new BreadcrumbBuilder().setMessage("Exit from getAllCampervan").build());
-        return rentalList;
-    }
-
-    @Override
-    public List getPricePerDayBetween(BigDecimal min, BigDecimal max) {
-        String message = String.format("Service - getBetweenPrice parameters" + min + max);
-        Sentry.getContext().recordBreadcrumb(new BreadcrumbBuilder().setMessage(message).build());
-        List rentalList = new ArrayList();
-        repository.findByPricePerDayBetween(min, max).forEach(rentalList::add);
-        Sentry.getContext()
-                .recordBreadcrumb(new BreadcrumbBuilder().setMessage("Exit from getBetweenPrice").build());
         return rentalList;
     }
 

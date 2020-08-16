@@ -1,6 +1,5 @@
 package com.campervans.campervan.controller;
 
-
 import com.campervans.campervan.exception.RecordNotFoundException;
 import com.campervans.campervan.model.RentalEntity;
 import com.campervans.campervan.repository.RentalRepository;
@@ -19,13 +18,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-//@RequestMapping(path = "/rental",  produces = MediaType.APPLICATION_JSON_VALUE)
 @RequestMapping(path = "/campervans",  produces = MediaType.APPLICATION_JSON_VALUE)
 public class RentalController {
 
     private static Logger logger = LoggerFactory.getLogger(RentalController.class);
-
-
 
     @Autowired
     private RentalServiceImp service;
@@ -33,8 +29,7 @@ public class RentalController {
     @Autowired
     private final RentalRepository rentalRepository;
 
-
-        RentalController(RentalRepository rentalRepository) {
+        public RentalController(RentalRepository rentalRepository) {
         this.rentalRepository = rentalRepository;
     }
 
@@ -53,7 +48,6 @@ public class RentalController {
     public ResponseEntity<List<RentalEntity>> getPagedCapmpervans(
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize)
-//            @RequestParam(defaultValue = "id") String sortBy)
     {
         List<RentalEntity> list = service.getPagedCampervans(pageNo, pageSize);//, sortBy);
 
@@ -83,17 +77,33 @@ public class RentalController {
         return new ResponseEntity<RentalEntity>(entity, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @GetMapping("/price_min_max")
+
+
+    @GetMapping("/priceMinMax")
     @Trace
-    public List<RentalEntity> getPriceMinMax(@RequestParam double min, double max) {
-        return service.getPricePerDayBetween(BigDecimal.valueOf(min), BigDecimal.valueOf(max));
+    public List<RentalEntity> getPricePerDayMinMax(@RequestParam double min, double max) {
+        return service.getPriceMinMax(BigDecimal.valueOf(min), BigDecimal.valueOf(max));
     }
+
+
+    @GetMapping("/ids")
+    @Trace
+    public List<RentalEntity> getCampvanByIds(@RequestParam long[] ids) throws RecordNotFoundException {
+            logger.info("IDS NEW.legnt {}", ids.length);
+
+        return service.getCampervanByIds(ids);
+    }
+
+//    @GetMapping("/price_min_max")
+//    public List<RentalEntity> getPriceMinMax(@RequestParam double min, double max) {
+//        return service.getPriceMinMax(BigDecimal.valueOf(min), BigDecimal.valueOf(max));
+//    }
 
     //////
 
 
     //TODO
-//    - `campervans`
+//    - `campervans`                                     list
 //    - `campervans?price[min]=9000&price[max]=75000`    ok
 //    - `campervans?page[limit]=3&page[offset]=6`        ok
 //    - `campervans?ids=2000,51155,54318`
@@ -113,17 +123,13 @@ public class RentalController {
         return service.getAllCampervan();
     }
 
-    @GetMapping("/all_price")
-    @Trace
-    public List<RentalEntity> getAllPriceDecs() {
-        return service.getAllCampervanOrderByPricePerDayDESC();
-    }
+//    @GetMapping("/all_price")
+//    @Trace
+//    public List<RentalEntity> getAllPriceDecs() {
+//        return service.getAllCampervanOrderByPricePerDayDESC();
+//    }
 
-    @GetMapping("/price_between")
-    @Trace
-    public List<RentalEntity> getPriceBetween(@RequestParam double min, double max) {
-        return service.getPricePerDayBetween(BigDecimal.valueOf(min), BigDecimal.valueOf(max));
-    }
+
 
     @GetMapping("/get_id")
     @Trace
@@ -144,10 +150,11 @@ public class RentalController {
         return service.getPage(limit, offset);
     }
 
-    @GetMapping("/ids")
-    @Trace
-    public List<RentalEntity> getIds(@RequestParam long[] ids) {
-        return service.getByCampervansIds(ids);
-    }
+//    @GetMapping("/idsold")
+//    @Trace
+//    public List<RentalEntity> getIds(@RequestParam long[] ids) {
+//        logger.info("IDS OLD {}", ids.length);
+//        return service.getByCampervansIds(ids);
+//    }
 
 }
