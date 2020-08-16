@@ -69,6 +69,14 @@ public class RentalServiceImp implements IRentalService{
         }
     }
 
+    @Override
+    public List getPriceMinMax(BigDecimal min, BigDecimal max) {
+        List list = new ArrayList();
+        repository.findByPricePerDayBetween(min, max).forEach(list::add);
+        return list;
+    }
+
+
 
 
     /////////////////////

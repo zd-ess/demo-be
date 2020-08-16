@@ -83,6 +83,12 @@ public class RentalController {
         return new ResponseEntity<RentalEntity>(entity, new HttpHeaders(), HttpStatus.OK);
     }
 
+    @GetMapping("/price_min_max")
+    @Trace
+    public List<RentalEntity> getPriceMinMax(@RequestParam double min, double max) {
+        return service.getPricePerDayBetween(BigDecimal.valueOf(min), BigDecimal.valueOf(max));
+    }
+
     //////
 
 

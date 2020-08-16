@@ -87,30 +87,4 @@ public class RentalEntity extends  AbstractEntity{
     @Column(name = "owner_avatar_url")
     private String OwnerAvatarUrl;
 
-    @Override
-    public String toString() {
-        return "RentalEntity{" +
-                "name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", description='" + description + '\'' +
-                ", sleeps=" + sleeps +
-                ", pricePerDay=" + pricePerDay +
-                ", homeCity='" + homeCity + '\'' +
-                ", homeState='" + homeState + '\'' +
-                ", homeZip='" + homeZip + '\'' +
-                ", homeCounty='" + homeCounty + '\'' +
-                ", homeCountry='" + homeCountry + '\'' +
-                ", vehicleMake='" + vehicleMake + '\'' +
-                ", vehicleModel='" + vehicleModel + '\'' +
-                ", vehicleYear=" + vehicleYear +
-                ", length=" + length +
-                ", created=" + created +
-                ", updated=" + updated +
-                ", lat=" + lat +
-                ", lng=" + lng +
-                ", primaryImageUrl='" + primaryImageUrl + '\'' +
-                ", OwnerName='" + OwnerName + '\'' +
-                ", OwnerAvatarUrl='" + OwnerAvatarUrl + '\'' +
-                '}';
-    }
 }
