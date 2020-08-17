@@ -1,8 +1,6 @@
-The task is to develop a campervan JSON API that returns a list of campervans that can be filtered, sorted, and paginated. We have included files to create a database of campervans and campervan images. There is a GOlang project in this repo ready to go, or you can use whatever backend technology you are comfortable with. Finish by pushing your code to Github and deploying both the API to Heroku or another hosting environment.
 
-Your application should respond to the following URLs.
 
-It responds to the next URLs:
+The application responds to the next URLs:
 
 http://127.0.0.1:8089/campervans/list
 http://127.0.0.1:8089/campervans/priceMinMax?min=16900&max=17001

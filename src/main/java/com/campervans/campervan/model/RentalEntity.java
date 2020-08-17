@@ -29,13 +29,13 @@ public class RentalEntity extends  AbstractEntity{
     @Column(name = "description")
     private String description;
 
-    @Column(name = "sleeps", nullable = false)
+    @Column(name = "sleeps")
     private int sleeps;
 
-    @Column(name = "price_per_day", nullable = false)
+    @Column(name = "price_per_day")
     private BigDecimal pricePerDay;
 
-    @Column(name = "home_city", nullable = false)
+    @Column(name = "home_city")
     private String homeCity;
 
     @Column(name = "home_state")
@@ -47,9 +47,6 @@ public class RentalEntity extends  AbstractEntity{
     @Column(name = "home_county")
     private String homeCounty;
 
-//    @Column(name = "home_country", nullable = false)
-//    private String homeCountry;
-
     @Column(name = "vehicle_make", nullable = false)
     private String vehicleMake;
 
@@ -59,7 +56,7 @@ public class RentalEntity extends  AbstractEntity{
     @Column(name = "vehicle_year", nullable = false)
     private int vehicleYear;
 
-    @Column(name = "vehicle_length", nullable = false)
+    @Column(name = "vehicle_length")
     private double length;
 
     @Column(nullable = false)
@@ -74,7 +71,7 @@ public class RentalEntity extends  AbstractEntity{
     @Column(nullable = false)
     private double lng;
 
-    @Column(name = "primary_image_url", nullable = false)
+    @Column(name = "primary_image_url")
     private String primaryImageUrl;
 
     @Column(name = "owner_name", nullable = false)

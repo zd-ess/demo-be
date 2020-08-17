@@ -11,12 +11,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping(path = "/campervans",  produces = MediaType.APPLICATION_JSON_VALUE)
 public class RentalController {
 
@@ -73,8 +77,12 @@ public class RentalController {
     }
 
    @GetMapping("/near")
-   public List<RentalEntity> getLocation(@RequestParam("x") double x,
-                                        @RequestParam("y") double y) {
+   public List<RentalEntity> getLocation(@RequestParam("x")
+                                            @Min(0L) @Max(100L)
+                                                    double x,
+                                         @RequestParam("y")
+                                         @Min(0L) @Max(100L)
+                                                 double y) {
     return service.getNearLocation(x, y);
    }
 

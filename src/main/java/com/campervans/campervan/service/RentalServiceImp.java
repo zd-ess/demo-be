@@ -85,33 +85,9 @@ public class RentalServiceImp implements IRentalService{
         return rentalList;
     }
 
-//        @Override
-//    public List getNear(double x, double y) {
-//        if (x < -90 || x > 90) {
-//            IllegalArgumentException e = new IllegalArgumentException("Longtitude out of limits");
-//            throw e;
-//        }
-//        if (y < -90 || y > 90) {
-//            IllegalArgumentException e = new IllegalArgumentException("Latitude out of limits");
-//            throw e;
-//        }
-//        List rentalList = new ArrayList();
-//        repository.findLocated(x, y).forEach(rentalList::add);
-//        return rentalList;
-//    }
-
-
     @Override
     public List getNearLocation(double x, double y) {
-        logger.info("X, Y +++ {}{}",x, y);
-        if (x < -90 || x > 90) {
-            IllegalArgumentException e = new IllegalArgumentException("Longtitude out of limits");
-            throw e;
-        }
-        if (y < -90 || y > 90) {
-            IllegalArgumentException e = new IllegalArgumentException("Latitude out of limits");
-            throw e;
-        }
+
         List rentalList = new ArrayList();
         repository.findNearLocation(x, y).forEach(rentalList::add);
         return rentalList;
