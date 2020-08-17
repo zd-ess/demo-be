@@ -63,36 +63,29 @@ public class RentalController {
     }
 
     @GetMapping(value = "/list")
-    List<RentalEntity> all() {
+    List<RentalEntity> findAll() {
         return (List<RentalEntity>) rentalRepository.findAll();
     }
 
-
     @GetMapping("/{id}")
-    public ResponseEntity<RentalEntity> getCampervanByIds(@PathVariable("id") Long id)
+    public ResponseEntity<RentalEntity> getCampervanById(@PathVariable("id") Long id)
             throws RecordNotFoundException {
         RentalEntity entity = service.getCampervanById(id);
 
         return new ResponseEntity<RentalEntity>(entity, new HttpHeaders(), HttpStatus.OK);
     }
 
-
-
     @GetMapping("/priceMinMax")
     public List<RentalEntity> getPricePerDayMinMax(@RequestParam double min, double max) {
         return service.getPriceMinMax(BigDecimal.valueOf(min), BigDecimal.valueOf(max));
     }
 
-
     @GetMapping("/ids")
     public List<RentalEntity> getCampvanByIds(@RequestParam long[] ids) throws RecordNotFoundException {
-            logger.info("IDS NEW.legnt {}", ids.length);
-
         return service.getCampervanByIds(ids);
     }
 
-    @GetMapping("/get_near")
-
+    @GetMapping("/near")
     public List<RentalEntity> getLocated(@RequestParam double x, double y) {
         return service.getLocation(x, y);
     }

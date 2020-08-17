@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Image extends AbstractEntity {
+public class ImageEntity extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = "rental_id", referencedColumnName = "id")
