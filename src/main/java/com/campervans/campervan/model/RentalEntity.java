@@ -47,8 +47,8 @@ public class RentalEntity extends  AbstractEntity{
     @Column(name = "home_county")
     private String homeCounty;
 
-    @Column(name = "home_country", nullable = false)
-    private String homeCountry;
+//    @Column(name = "home_country", nullable = false)
+//    private String homeCountry;
 
     @Column(name = "vehicle_make", nullable = false)
     private String vehicleMake;

@@ -20,8 +20,6 @@ import java.util.List;
 @RequestMapping(path = "/campervans",  produces = MediaType.APPLICATION_JSON_VALUE)
 public class RentalController {
 
-    private static Logger logger = LoggerFactory.getLogger(RentalController.class);
-
     @Autowired
     private RentalServiceImp service;
 
@@ -74,47 +72,10 @@ public class RentalController {
         return service.getCampervanByIds(ids);
     }
 
-//    @RequestMapping("near/{lat},{lng}")
-//    public List<RentalEntity> getNearbyUsers(@PathVariable double lat, @PathVariable double lng)  {
-//        List<RentalEntity> listNear=  this.rentalRepository.findAllNearBy(lat,lng);
-//
-//        return listNear;
-//    }
+   @GetMapping("/near")
+   public List<RentalEntity> getLocation(@RequestParam("x") double x,
+                                        @RequestParam("y") double y) {
+    return service.getNearLocation(x, y);
+   }
 
-//    @RequestMapping("/near/{lat}/{lng}")
-//    public List<RentalEntity> getLocated(@RequestParam("lat") double x,
-//                                         @RequestParam("lng") double y) {
-//        return service.getLocation(x, y);
-//    }
-@GetMapping("/near")
-public List<RentalEntity> getLocated(@RequestParam("x") double x,
-                                     @RequestParam("y") double y) {
-    return service.getLocation(x, y);
-}
-
-    //TODO
-//    - `campervans`                                     ok list
-//    - `campervans?price[min]=9000&price[max]=75000`    ok
-//    - `campervans?page[limit]=3&page[offset]=6`        ok
-//    - `campervans?ids=2000,51155,54318`                ok
-//    - `campervans?near=33.64,-117.93` // within 100 miles
-//    - `campervans?sort=price`                          ok
-//    - `campervans/<CAMPER_VAN_ID>`                     ok
-
-//
-//    http://127.0.0.1:8089/campervans/list
-
-//    http://127.0.0.1:8089/campervans/priceMinMax?min=16900&max=17001
-
-//    http://127.0.0.1:8089/campervans/van_paged?pageSize=20&pageNo=1
-
-//    http://127.0.0.1:8089/campervans/ids?ids=11368,21399,4447
-
-//    http://127.0.0.1:8089/campervans/near?lat=21.89&lng=-47.95
-
-//    http://127.0.0.1:8089/campervans/campervans?sortBy=pricePerDay
-
-//    http://127.0.0.1:8089/campervans/119960
-
-
-}
+   }
