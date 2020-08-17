@@ -1,15 +1,12 @@
 package com.campervans.campervan.controller;
 
-import com.campervans.campervan.exception.RecordNotFoundException;
 import com.campervans.campervan.model.RentalEntity;
 import com.campervans.campervan.service.RentalServiceImp;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,14 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-//@RunWith(JUnitPlatform.class)
 @WebMvcTest(RentalController.class)
 class RentalControllerTest {
 
@@ -45,9 +38,6 @@ class RentalControllerTest {
 
     @MockBean
     RentalEntity rentalEntity;
-
-
-
 
     @BeforeEach
     void setUp() {

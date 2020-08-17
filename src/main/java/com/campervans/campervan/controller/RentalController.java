@@ -32,18 +32,7 @@ public class RentalController {
         this.rentalRepository = rentalRepository;
     }
 
-    @GetMapping("/van")
-    public ResponseEntity<List<RentalEntity>> getPagedAndSortedCapmpervans(
-            @RequestParam(defaultValue = "0") Integer pageNo,
-            @RequestParam(defaultValue = "10") Integer pageSize,
-            @RequestParam(defaultValue = "id") String sortBy)
-    {
-        List<RentalEntity> list = service.getPagedAndSortedCampervans(pageNo, pageSize, sortBy);
-
-        return new ResponseEntity<List<RentalEntity>>(list, new HttpHeaders(), HttpStatus.OK);
-    }
-
-    @GetMapping("/van_paged")
+    @RequestMapping("/van_paged")
     public ResponseEntity<List<RentalEntity>> getPagedCapmpervans(
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize)
@@ -53,7 +42,7 @@ public class RentalController {
         return new ResponseEntity<List<RentalEntity>>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @GetMapping("/campervans")
+    @RequestMapping("/campervans")
     public ResponseEntity<List<RentalEntity>> geSortedCapmpervans(
             @RequestParam(defaultValue = "id") String sortBy)
     {
@@ -62,12 +51,12 @@ public class RentalController {
         return new ResponseEntity<List<RentalEntity>>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/list")
+    @RequestMapping(value = "/list")
     List<RentalEntity> findAll() {
         return (List<RentalEntity>) rentalRepository.findAll();
     }
 
-    @GetMapping("/{id}")
+    @RequestMapping("/{id}")
     public ResponseEntity<RentalEntity> getCampervanById(@PathVariable("id") Long id)
             throws RecordNotFoundException {
         RentalEntity entity = service.getCampervanById(id);
@@ -75,20 +64,33 @@ public class RentalController {
         return new ResponseEntity<RentalEntity>(entity, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @GetMapping("/priceMinMax")
+    @RequestMapping("/priceMinMax")
     public List<RentalEntity> getPricePerDayMinMax(@RequestParam double min, double max) {
         return service.getPriceMinMax(BigDecimal.valueOf(min), BigDecimal.valueOf(max));
     }
 
-    @GetMapping("/ids")
+    @RequestMapping("/ids")
     public List<RentalEntity> getCampvanByIds(@RequestParam long[] ids) throws RecordNotFoundException {
         return service.getCampervanByIds(ids);
     }
 
-    @GetMapping("/near")
-    public List<RentalEntity> getLocated(@RequestParam double x, double y) {
-        return service.getLocation(x, y);
-    }
+//    @RequestMapping("near/{lat},{lng}")
+//    public List<RentalEntity> getNearbyUsers(@PathVariable double lat, @PathVariable double lng)  {
+//        List<RentalEntity> listNear=  this.rentalRepository.findAllNearBy(lat,lng);
+//
+//        return listNear;
+//    }
+
+//    @RequestMapping("/near/{lat}/{lng}")
+//    public List<RentalEntity> getLocated(@RequestParam("lat") double x,
+//                                         @RequestParam("lng") double y) {
+//        return service.getLocation(x, y);
+//    }
+@GetMapping("/near")
+public List<RentalEntity> getLocated(@RequestParam("x") double x,
+                                     @RequestParam("y") double y) {
+    return service.getLocation(x, y);
+}
 
     //TODO
 //    - `campervans`                                     ok list
@@ -98,6 +100,21 @@ public class RentalController {
 //    - `campervans?near=33.64,-117.93` // within 100 miles
 //    - `campervans?sort=price`                          ok
 //    - `campervans/<CAMPER_VAN_ID>`                     ok
+
+//
+//    http://127.0.0.1:8089/campervans/list
+
+//    http://127.0.0.1:8089/campervans/priceMinMax?min=16900&max=17001
+
+//    http://127.0.0.1:8089/campervans/van_paged?pageSize=20&pageNo=1
+
+//    http://127.0.0.1:8089/campervans/ids?ids=11368,21399,4447
+
+//    http://127.0.0.1:8089/campervans/near?lat=21.89&lng=-47.95
+
+//    http://127.0.0.1:8089/campervans/campervans?sortBy=pricePerDay
+
+//    http://127.0.0.1:8089/campervans/119960
 
 
 }

@@ -1,8 +1,11 @@
 package com.campervans.campervan.service;
 
+import com.campervans.campervan.controller.RentalController;
 import com.campervans.campervan.exception.RecordNotFoundException;
 import com.campervans.campervan.model.RentalEntity;
 import com.campervans.campervan.repository.RentalRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,21 +21,11 @@ import java.util.Optional;
 @Service
 public class RentalServiceImp implements IRentalService{
 
+    private static Logger logger = LoggerFactory.getLogger(RentalServiceImp.class);
+
+
     @Autowired
     private RentalRepository repository;
-
-    public List<RentalEntity> getPagedAndSortedCampervans(Integer pageNo, Integer pageSize, String sortBy)
-    {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-
-        Page<RentalEntity> pagedResult = repository.findAll(paging);
-
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
-            return new ArrayList<RentalEntity>();
-        }
-    }
 
     public List<RentalEntity> getPagedCampervans(Integer pageNo, Integer pageSize)
     {
@@ -91,6 +84,22 @@ public class RentalServiceImp implements IRentalService{
 
         return rentalList;
     }
+
+//        @Override
+//    public List getNear(double x, double y) {
+//        if (x < -90 || x > 90) {
+//            IllegalArgumentException e = new IllegalArgumentException("Longtitude out of limits");
+//            throw e;
+//        }
+//        if (y < -90 || y > 90) {
+//            IllegalArgumentException e = new IllegalArgumentException("Latitude out of limits");
+//            throw e;
+//        }
+//        List rentalList = new ArrayList();
+//        repository.findLocated(x, y).forEach(rentalList::add);
+//        return rentalList;
+//    }
+
 
     @Override
     public List getLocation(double x, double y) {

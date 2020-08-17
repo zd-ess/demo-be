@@ -10,5 +10,7 @@ public interface IRentalService {
 
     List getPriceMinMax(BigDecimal min, BigDecimal max);
 
+//    List getNear(double x, double y);
+
     List getLocation(double lad, double lng);
 }
