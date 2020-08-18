@@ -1,12 +1,9 @@
 package com.campervans.campervan.model;
 
-import com.sun.istack.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -79,5 +76,4 @@ public class RentalEntity extends  AbstractEntity{
 
     @Column(name = "owner_avatar_url")
     private String OwnerAvatarUrl;
-
 }

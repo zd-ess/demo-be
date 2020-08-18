@@ -4,8 +4,6 @@ import com.campervans.campervan.exception.RecordNotFoundException;
 import com.campervans.campervan.model.RentalEntity;
 import com.campervans.campervan.repository.RentalRepository;
 import com.campervans.campervan.service.RentalServiceImp;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -44,7 +42,7 @@ public class RentalController {
         return new ResponseEntity<List<RentalEntity>>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @RequestMapping("/campervans")
+    @RequestMapping("/")
     public ResponseEntity<List<RentalEntity>> geSortedCapmpervans(
             @RequestParam(defaultValue = "id") String sortBy)
     {
@@ -66,6 +64,17 @@ public class RentalController {
         return new ResponseEntity<RentalEntity>(entity, new HttpHeaders(), HttpStatus.OK);
     }
 
+
+    @GetMapping("/near")
+    public List<RentalEntity> getLocation(@RequestParam("lat")
+                                          @Min(-100L) @Max(100L)
+                                                  double x,
+                                          @RequestParam("lng")
+                                          @Min(-100L) @Max(100L)
+                                                  double y) {
+        return service.getNearLocation(x, y);
+    }
+
     @RequestMapping("/priceMinMax")
     public List<RentalEntity> getPricePerDayMinMax(@RequestParam double min, double max) {
         return service.getPriceMinMax(BigDecimal.valueOf(min), BigDecimal.valueOf(max));
@@ -75,15 +84,4 @@ public class RentalController {
     public List<RentalEntity> getCampvanByIds(@RequestParam long[] ids) throws RecordNotFoundException {
         return service.getCampervanByIds(ids);
     }
-
-   @GetMapping("/near")
-   public List<RentalEntity> getLocation(@RequestParam("x")
-                                            @Min(0L) @Max(100L)
-                                                    double x,
-                                         @RequestParam("y")
-                                         @Min(0L) @Max(100L)
-                                                 double y) {
-    return service.getNearLocation(x, y);
-   }
-
-   }
+    }

@@ -1,6 +1,5 @@
 package com.campervans.campervan.service;
 
-import com.campervans.campervan.controller.RentalController;
 import com.campervans.campervan.exception.RecordNotFoundException;
 import com.campervans.campervan.model.RentalEntity;
 import com.campervans.campervan.repository.RentalRepository;
@@ -59,6 +58,17 @@ public class RentalServiceImp implements IRentalService{
         }
     }
 
+    @Override
+    public List getNearLocation(double x, double y) {
+
+        logger.info("Input latitude and longitude are: {} {}", x , y);
+
+        List rentalList = new ArrayList();
+        repository.findNearLocation(x, y).forEach(rentalList::add);
+        return rentalList;
+    }
+
+
     public List getCampervanByIds(long[] ids) throws RecordNotFoundException
     {
         if(ids.length == 0){
@@ -85,12 +95,5 @@ public class RentalServiceImp implements IRentalService{
         return rentalList;
     }
 
-    @Override
-    public List getNearLocation(double x, double y) {
-
-        List rentalList = new ArrayList();
-        repository.findNearLocation(x, y).forEach(rentalList::add);
-        return rentalList;
-    }
 
 }
